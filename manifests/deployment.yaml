@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlops-app-project-07
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mlops-app-project-07
+  template:
+    metadata:
+      labels:
+        app: mlops-app-project-07
+    spec:
+      containers:
+      - name: mlops-app-project-07
+        image: 
+        ports:
+        - containerPort: 5000
