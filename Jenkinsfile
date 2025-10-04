@@ -6,8 +6,7 @@ pipeline {
                 echo 'Checking out code from GitHub...'
 
 
-		checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: 		[[credentialsId: 'thilinaID', url: 'https://github.com/JThilinaDK123/mlops-			Comet-ML-GitHub-Jenkins-ArgoCD-Minikube-VM.git']])
-
+		checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'thilinaID', url: 'https://github.com/JThilinaDK123/mlops-Comet-ML-GitHub-Jenkins-ArgoCD-Minikube-VM.git']])
 
 		    }
         }        
