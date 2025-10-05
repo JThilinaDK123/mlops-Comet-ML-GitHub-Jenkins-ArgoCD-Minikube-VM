@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_HUB_REPO = "thilina9718/thilina-mlops"
+        DOCKER_HUB_CREDENTIALS_ID = "dockerthilina"
+        BUILD_NUMBER = "latest"
+    }
     stages {
         stage('Checkout Github') {
             steps {
@@ -12,12 +17,20 @@ pipeline {
         }        
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
+                script {
+                    echo 'Building Docker image...'
+                    dockerImage = docker.build("${DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
+                }
             }
         }
         stage('Push Image to DockerHub') {
             steps {
-                echo 'Pushing Docker image to DockerHub...'
+                script {
+                    echo 'Pushing Docker image to DockerHub...'
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}") {
+                        dockerImage.push('latest')
+                    }
+                }
             }
         }
         stage('Install Kubectl & ArgoCD CLI') {

@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: mlops-app-project-07
-        image: 
+        image: thilina9718/thilina-mlops:latest
         ports:
         - containerPort: 5000
