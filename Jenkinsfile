@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_REPO = "thilina9718/thilina-mlops"
-        DOCKER_HUB_CREDENTIALS_ID = "dockerthilina"
+        DOCKER_HUB_CREDENTIALS_ID = "docker-cred"
         BUILD_NUMBER = "latest"
     }
     stages {
