@@ -9,10 +9,7 @@ pipeline {
         stage('Checkout Github') {
             steps {
                 echo 'Checking out code from GitHub...'
-
-
-		checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'thilinaID', url: 'https://github.com/JThilinaDK123/mlops-Comet-ML-GitHub-Jenkins-ArgoCD-Minikube-VM.git']])
-
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'thilinaID', url: 'https://github.com/JThilinaDK123/mlops-Comet-ML-GitHub-Jenkins-ArgoCD-Minikube-VM.git']])
 		    }
         }        
         stage('Build Docker Image') {
@@ -27,7 +24,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing Docker image to DockerHub...'
-                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}") {
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS_ID}") {
                         dockerImage.push('latest')
                     }
                 }
