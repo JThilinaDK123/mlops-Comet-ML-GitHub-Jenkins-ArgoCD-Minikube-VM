@@ -5,6 +5,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS_ID = "docker-cred"
         BUILD_NUMBER = "latest"
     }
+    
     stages {
         stage('Checkout Github') {
             steps {
