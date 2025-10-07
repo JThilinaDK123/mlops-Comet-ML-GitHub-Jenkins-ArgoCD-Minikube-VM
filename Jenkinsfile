@@ -34,33 +34,31 @@ pipeline {
             }
         }
 
-        // stage('Build Docker Image') {
+        // stage('Install Kubectl & ArgoCD CLI') {
         //     steps {
-        //         script {
-        //             echo 'Building Docker image...'
-        //             dockerImage = docker.build("${DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
-        //         }
+        //         sh '''
+        //         echo 'installing Kubectl & ArgoCD cli...'
+        //         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        //         chmod +x kubectl
+        //         mv kubectl /usr/local/bin/kubectl
+        //         curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+        //         chmod +x /usr/local/bin/argocd
+        //         '''
         //     }
         // }
-        // stage('Push Image to DockerHub') {
+        
+        // stage('Apply Kubernetes & Sync App with ArgoCD') {
         //     steps {
         //         script {
-        //             echo 'Pushing Docker image to DockerHub...'
-        //             docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS_ID}") {
-        //                 dockerImage.push('latest')
+        //             kubeconfig(credentialsId: 'kubeconfig-cred', serverUrl: 'https://192.168.49.2:8443'){
+        //                 sh '''
+        //                 argocd login 34.72.5.170:31056 --username admin --password $(kubectl get secret -n argocd 
+        //                 argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure
+        //                 argocd app sync gitopsapp
+        //                 '''
         //             }
         //         }
         //     }
         // }
-        stage('Install Kubectl & ArgoCD CLI') {
-            steps {
-                echo 'Installing Kubectl and ArgoCD CLI...'
-            }
-        }
-        stage('Apply Kubernetes & Sync App with ArgoCD') {
-            steps {
-                echo 'Applying Kubernetes and syncing with ArgoCD...'
-            }
-        }
     }
 }
